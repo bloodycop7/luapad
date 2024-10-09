@@ -123,6 +123,8 @@ function PANEL:Init()
     self.EnlargeButton:SetImage( "icon16/application_xp_terminal.png" )
     self.EnlargeButton:SetTooltip( "Enlarge Console" )
     self.EnlargeButton:SetSize( 16, 16 )
+    self.EnlargeButton:DockMargin( 0, 4, 4, 4 )
+    self.EnlargeButton:Dock( RIGHT )
 
 
     function self.EnlargeButton:DoClick()
@@ -143,12 +145,17 @@ function PANEL:Init()
         end
     end
 
-    local performLayout = self.EnlargeButton.PerformLayout
+    self.ClearButton = vgui.Create( "DImageButton", self.Input )
+    self.ClearButton:SetImage( "icon16/application_delete.png" )
+    self.ClearButton:SetTooltip( "Clear Console" )
+    self.ClearButton:SetSize( 16, 16 )
+    self.ClearButton:DockMargin( 0, 4, 4, 4 )
+    self.ClearButton:Dock( RIGHT )
 
-    self.EnlargeButton.PerformLayout = function( pnl, w, h )
-        performLayout( pnl, w, h )
-
-        self.EnlargeButton:SetPos( self.Input:GetWide() - 21, 4 )
+    function self.ClearButton:DoClick()
+        if IsValid( luapad.Frame.Console ) then
+            luapad.Frame.Console:ClearConsoleText()
+        end
     end
 
     self.ClearButton = vgui.Create( "DImageButton", self.Input )
